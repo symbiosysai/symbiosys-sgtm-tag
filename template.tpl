@@ -14,7 +14,7 @@ ___INFO___
   "version": 1,
   "securityGroups": [],
   "displayName": "Symbiosys Event API",
-  "categories": ["ANALYTICS", "ATTRIBUTION", "CONVERSIONS"]
+  "categories": ["ANALYTICS", "ATTRIBUTION", "CONVERSIONS"],
   "brand": {
     "id": "brand_dummy",
     "displayName": "",
