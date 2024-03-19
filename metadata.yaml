@@ -1,5 +1,5 @@
 homepage: "https://www.symbiosys.ai/"
 documentation: "https://docs.google.com/document/d/1shEiuXUhReDvQrFQYdxhCt1ZNDTgRCMZKWzlES9dP-w/edit"
 versions:
-  - sha: 55f74082cd88292d591701be54a06005c063efa9
+  - sha: 41226cfb76c82d7c9b4c75250d03d7d31d392945
     changeNotes: Initial release.
