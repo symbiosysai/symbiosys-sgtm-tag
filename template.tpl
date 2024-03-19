@@ -1,4 +1,4 @@
-﻿___TERMS_OF_SERVICE___
+___TERMS_OF_SERVICE___
 
 By creating or modifying this file you agree to Google Tag Manager's Community
 Template Gallery Developer Terms of Service available at
@@ -402,7 +402,7 @@ scenarios:
   code: |-
     const mockData = {
       // Mocked field values
-      'api_key': 'AIzaSyBiBKUNW4KN2aS-UxqjdQBCn9K4sA4no94', //trvfit
+      'api_key': '', //trvfit
       'is_dev': true,
       'event_name_field': 'event_name',
       'purchase_event_name': 'purchase',
