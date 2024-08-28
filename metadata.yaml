@@ -1,5 +1,7 @@
 homepage: "https://www.symbiosys.ai/"
 documentation: "https://docs.google.com/document/d/1shEiuXUhReDvQrFQYdxhCt1ZNDTgRCMZKWzlES9dP-w/edit"
 versions:
+  - sha: 3484431f6d7beca6ae0cbaddb28991c5644ff2f5
+    changeNotes: Add us/eu config field and discounted price
   - sha: 41226cfb76c82d7c9b4c75250d03d7d31d392945
     changeNotes: Initial release.
