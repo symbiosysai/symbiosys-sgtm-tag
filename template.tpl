@@ -14,7 +14,11 @@ ___INFO___
   "version": 1,
   "securityGroups": [],
   "displayName": "Symbiosys Event API",
-  "categories": ["ANALYTICS", "ATTRIBUTION", "CONVERSIONS"],
+  "categories": [
+    "ANALYTICS",
+    "ATTRIBUTION",
+    "CONVERSIONS"
+  ],
   "brand": {
     "id": "github.com_symbiosysai",
     "displayName": "symbiosysai",
@@ -172,14 +176,22 @@ function mapItemFields(items){
   if(typeof items === 'string'){
     items = JSON.parse(items);
   }
-  return items.map(i => ({
-    product_id: i.item_id,
-    quantity: i.quantity,
-    regular_unit_price: i.price,
-    discount_unit_price: i.price, // NOTE: can use -=discount here in the future
-    brand: i.item_brand,
-    seller_id: i.affiliation
-  }));
+  return items.map(i => {
+    let discountedPrice = i.price;
+    if (i.discounted_price !== null && i.discounted_price !== undefined) {
+      discountedPrice = i.discounted_price;
+    } else if (i.discount !== null && i.discount !== undefined) {
+      discountedPrice = i.price - i.discount;
+    }
+    return {
+      product_id: i.item_id,
+      quantity: i.quantity,
+      regular_unit_price: i.price,
+      discount_unit_price: discountedPrice,
+      brand: i.item_brand,
+      seller_id: i.affiliation
+    };
+  });
 }
 
 function makeSymbRequest(endpoint, payload, apiKey) {
@@ -437,6 +449,58 @@ scenarios:
     // Verify that the tag finished successfully.
     // assertApi('gtmOnSuccess').wasCalled();
 - name: Purchase
+  code: |+
+    const logToConsole = require('logToConsole');
+
+    const mockData = {
+      // Mocked field values
+      'api_key': '', //insert trvfit api here
+      'is_dev': true,
+      'is_us': true,
+      'event_name_field': 'event_name',
+      'purchase_event_name': 'purchase',
+      'page_view_event_name': 'page_view',
+      'product_id_field': 'product_id',
+      'visitor_id_field': 'client_id',
+      'ga_session_id_field': 'ga_session_id',
+      'crm_id_field': 'user_id',
+      'page_location_field': 'page_location',
+      'ip_address_field': 'ip_override',
+      'origin_url_field': 'page_referrer',
+      'order_id_field': 'transaction_id',
+      'order_items_field': 'items'
+    };
+    assertThat(mockData.api_key.slice(0,3) === 'AIz', "**** Contact symbiosys admin for test api key ****").isTruthy();
+
+    const mockEvent = {
+      event_name: 'purchase',
+      client_id: '123',
+      ga_session_id: '456',
+      user_id: '789',
+      transaction_id: 'testtxn',
+      items: [
+        {
+          item_id: 'testprod',
+          quantity: 2,
+          price: 44.34,
+          discounted_price: 40.1,
+          item_brand: 'Test Brand',
+          affiliation: null,
+        }
+      ]
+    };
+
+    mock('getEventData', (field)=>{
+      return mockEvent[field];
+    });
+
+    // Call runCode to run the template's code.
+    runCode(mockData).then(result=>{
+      // Verify that the tag finished successfully.
+      assertApi('gtmOnSuccess').wasCalled();
+    });
+
+- name: Purchase without discounted price
   code: |+
     const logToConsole = require('logToConsole');
 
