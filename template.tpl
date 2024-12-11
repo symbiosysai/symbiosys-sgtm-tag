@@ -360,6 +360,10 @@ ___SERVER_PERMISSIONS___
               {
                 "type": 1,
                 "string": "https://event.symbiosys.ai/*"
+              },
+              {
+                "type": 1,
+                "string": "https://eu.event.symbiosys.ai/*"
               }
             ]
           }
